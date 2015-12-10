@@ -1,5 +1,8 @@
 // ! ! !
 // Three Bugs
+//////////   lines 32 and 35-37  array1 was missing the first bracket with reference to i eg [i]  //////////////////
+//////////   line 74 should not subtract 1 from var basePercent    //////////////////
+//////////   line 49 was missing the Math.round() property to round the result of baseSalary * (1.0 + bonus)  ///////////////
 
 var arrayAtticus = ["Atticus", "2405", "47000", 3];
 var arrayJem = ["Jem", "62347", "63500", 4];
@@ -26,19 +29,24 @@ for(var i = 0; i < array.length; i++){
 function calculateSTI(array1){
   var newArray = [];
 
-  newArray[0] = array1[0];
+///////    missing 1st bracket in array to reference current array set to variable i     ////////////
+  newArray[0] = array1[i][0];
 
-  var employeeNumber = array1[1];
-  var baseSalary = array1[2];
-  var reviewScore = array1[3];
-
+//////   missing 1st bracket in array to reference current array set to variable i      /////////////
+  var employeeNumber = array1[i][1];
+  var baseSalary = array1[i][2];
+  var reviewScore = array1[i][3];
+  
+  
   var bonus = getBaseSTI(reviewScore) + getYearAdjustment(employeeNumber) - getIncomeAdjustment(baseSalary);
+  
   if(bonus > 0.13){
     bonus = 0.13;
   }
 
   newArray[1] = bonus;
-  newArray[2] = baseSalary * (1.0 + bonus);
+  //////////    missing Math.round() when adding bonus to baseSalary     //////////////////
+  newArray[2] = Math.round(baseSalary * (1.0 + bonus));
   newArray[3] = Math.round(baseSalary * bonus);
   console.log(newArray[0] + " " + newArray[1] + " " + newArray[2] + " " + newArray[3]);
   return newArray;
@@ -63,7 +71,8 @@ function getBaseSTI(reviewScore){
       basePercent = 0.10;
       break;
   }
-  return basePercent - 1;
+///////    should return basePerect only and not subtract 1 from it to give it a negative number  ///////  
+  return basePercent;                  
 }
 
 function getYearAdjustment(employeeNumber){
